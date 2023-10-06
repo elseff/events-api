@@ -1,0 +1,41 @@
+version: '3'
+services:
+  events-api:
+    container_name: events-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVER_PORT=8080
+    ports:
+    - 8080:8080
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://events-db:5432/events-api
+      - POSTGRES_USERNAME=elseff
+      - POSTGRES_PASSWORD=root
+      - SERVER_PORT=8080
+    healthcheck:
+      test: [ 'CMD', 'curl', '-f','http://localhost:8080/actuator/health' ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      events-db:
+        condition: service_healthy
+  events-db:
+    container_name: events-db
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=events-api
+      - POSTGRES_USER=elseff
+      - POSTGRES_PASSWORD=root
+    ports:
+    - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL","sh -c 'pg_isready -U elseff -d events-api'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: always
+
+

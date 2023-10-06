@@ -1,0 +1,29 @@
+spring:
+  flyway:
+    enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: '${POSTGRES_URL}'
+    username: '${POSTGRES_USERNAME}'
+    password: '${POSTGRES_PASSWORD}'
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  output:
+    ansi:
+      enabled: always
+server:
+  error:
+    include-message: always
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: true
+    whitelabel:
+      enabled: true
+  port: '${SERVER_PORT}'
+jwt:
+  secret: 'c29jaWFsbWVkaWE='
