@@ -28,8 +28,9 @@ public class AuthController {
         return authService.register(request);
     }
 
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public AuthResponse login(@RequestBody @Valid AuthLoginRequest request){
-//        return authService.login(request);
-        return new AuthResponse();
+        return authService.login(request);
     }
 }

@@ -11,6 +11,7 @@ import ru.danila.eventsapi.persistense.UserEntity;
 import ru.danila.eventsapi.persistense.dao.RoleRepository;
 import ru.danila.eventsapi.persistense.dao.UserRepository;
 import ru.danila.eventsapi.security.JwtProvider;
+import ru.danila.eventsapi.web.api.modules.auth.dto.AuthLoginRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthRegisterRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthResponse;
 import ru.danila.eventsapi.web.api.modules.user.dto.assembler.UserDtoAssembler;
@@ -58,6 +59,22 @@ public class AuthService {
                 .username(user.getUsername())
                 .token(token)
                 .role(role.getName())
+                .build();
+    }
+
+    public AuthResponse login(AuthLoginRequest request) {
+        UserEntity user = userRepository.findByUsername(request.getUsername()).orElseThrow(
+                () -> new IllegalArgumentException("Пользователь с таким ником не найден"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
+            throw new IllegalArgumentException("Неверный пароль!");
+
+        String token = jwtProvider.generateToken(request.getUsername());
+
+        return AuthResponse.builder()
+                .username(request.getUsername())
+                .role(user.getRoles().iterator().next().getName())
+                .token(token)
                 .build();
     }
 }
