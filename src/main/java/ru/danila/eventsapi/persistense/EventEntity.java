@@ -33,5 +33,5 @@ public class EventEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organizer_id", nullable = false)
-    OrganizerEntity organizer;
+    UserEntity organizer;
 }

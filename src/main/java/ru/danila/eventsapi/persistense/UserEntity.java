@@ -42,8 +42,6 @@ public class UserEntity {
             fetch = FetchType.LAZY)
     List<TicketEntity> tickets = new ArrayList<>();
 
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_entity_role_entity",
             joinColumns = @JoinColumn(
@@ -54,5 +52,5 @@ public class UserEntity {
                     name = "role_id",
                     referencedColumnName = "id"
             ))
-    Set<RoleEntity> roles;
+    Set<RoleEntity> roles = new HashSet<>();
 }

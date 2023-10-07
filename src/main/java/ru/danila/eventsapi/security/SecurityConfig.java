@@ -42,10 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/events").hasRole("ROLE_ORGANIZER")
-                .antMatchers(HttpMethod.PATCH, "/api/v1/events").hasRole("ROLE_ORGANIZER")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/events").hasRole("ROLE_ORGANIZER")
+                .antMatchers(HttpMethod.POST, "/api/v1/events").hasRole("ORGANIZER")
+                .antMatchers(HttpMethod.PATCH, "/api/v1/events").hasRole("ORGANIZER")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/events").hasRole("ORGANIZER")
                 .antMatchers(HttpMethod.GET, "/api/v1/events").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

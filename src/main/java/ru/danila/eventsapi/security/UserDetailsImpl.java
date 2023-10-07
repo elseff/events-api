@@ -16,7 +16,6 @@ import java.util.Collection;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDetailsImpl implements UserDetails {
 
-    String email;
     String username;
     String password;
     Collection<? extends GrantedAuthority> grantedAuthorities;
@@ -42,10 +41,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override

@@ -19,13 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user;
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь с ником '" + username + "' не найден"));
 
-        user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found"));
-
-        ru.danila.eventsapi.security.UserDetailsImpl userDetails = ru.danila.eventsapi.security.UserDetailsImpl.toUserDetails(user);
-
-        return userDetails;
+        return UserDetailsImpl.toUserDetails(user);
     }
 }
