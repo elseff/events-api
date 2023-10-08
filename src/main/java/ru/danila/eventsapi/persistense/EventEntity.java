@@ -34,4 +34,7 @@ public class EventEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organizer_id", nullable = false)
     UserEntity organizer;
+
+    @Column(name = "free_seats", nullable = false)
+    Long freeSeats;
 }

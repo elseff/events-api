@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.danila.eventsapi.persistense.RoleEntity;
@@ -11,11 +13,13 @@ import ru.danila.eventsapi.persistense.UserEntity;
 import ru.danila.eventsapi.persistense.dao.RoleRepository;
 import ru.danila.eventsapi.persistense.dao.UserRepository;
 import ru.danila.eventsapi.security.JwtProvider;
+import ru.danila.eventsapi.security.UserDetailsImpl;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthLoginRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthRegisterRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthResponse;
 import ru.danila.eventsapi.web.api.modules.user.dto.assembler.UserDtoAssembler;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -35,6 +39,7 @@ public class AuthService {
 
     JwtProvider jwtProvider;
 
+    @Transactional
     public AuthResponse register(AuthRegisterRequest request) {
         userRepository.findByUsername(request.getUsername()).ifPresent(userEntity -> {
             throw new IllegalArgumentException("Пользователь с таким ником уже существует");
@@ -62,6 +67,7 @@ public class AuthService {
                 .build();
     }
 
+    @Transactional
     public AuthResponse login(AuthLoginRequest request) {
         UserEntity user = userRepository.findByUsername(request.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("Пользователь с таким ником не найден"));
@@ -76,5 +82,10 @@ public class AuthService {
                 .role(user.getRoles().iterator().next().getName())
                 .token(token)
                 .build();
+    }
+
+    @Transactional
+    public UserDetails getCurrentAuthUser() {
+        return (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
