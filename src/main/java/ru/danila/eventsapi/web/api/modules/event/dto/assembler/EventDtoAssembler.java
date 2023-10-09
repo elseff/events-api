@@ -1,4 +1,4 @@
-package ru.danila.eventsapi.web.api.modules.event.assembler;
+package ru.danila.eventsapi.web.api.modules.event.dto.assembler;
 
 import org.springframework.stereotype.Component;
 import ru.danila.eventsapi.persistense.EventEntity;

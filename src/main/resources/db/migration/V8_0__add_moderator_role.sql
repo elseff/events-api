@@ -1,0 +1,2 @@
+INSERT INTO role_entity(name)
+VALUES ('ROLE_MODERATOR');

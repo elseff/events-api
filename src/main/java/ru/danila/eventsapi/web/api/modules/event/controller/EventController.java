@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.danila.eventsapi.persistense.EventEntity;
-import ru.danila.eventsapi.web.api.modules.event.assembler.EventDtoAssembler;
+import ru.danila.eventsapi.web.api.modules.event.dto.assembler.EventDtoAssembler;
 import ru.danila.eventsapi.web.api.modules.event.dto.EventCreationRequest;
 import ru.danila.eventsapi.web.api.modules.event.dto.EventCreationResponse;
 import ru.danila.eventsapi.web.api.modules.event.dto.EventResponse;

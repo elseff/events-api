@@ -11,7 +11,7 @@ import ru.danila.eventsapi.persistense.UserEntity;
 import ru.danila.eventsapi.persistense.dao.EventRepository;
 import ru.danila.eventsapi.persistense.dao.PlaceRepository;
 import ru.danila.eventsapi.web.api.modules.auth.service.AuthService;
-import ru.danila.eventsapi.web.api.modules.event.assembler.EventDtoAssembler;
+import ru.danila.eventsapi.web.api.modules.event.dto.assembler.EventDtoAssembler;
 import ru.danila.eventsapi.web.api.modules.event.dto.EventCreationRequest;
 import ru.danila.eventsapi.web.api.modules.user.service.UserService;
 

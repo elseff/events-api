@@ -17,7 +17,7 @@ import ru.danila.eventsapi.security.UserDetailsImpl;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthLoginRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthRegisterRequest;
 import ru.danila.eventsapi.web.api.modules.auth.dto.AuthResponse;
-import ru.danila.eventsapi.web.api.modules.user.dto.assembler.UserDtoAssembler;
+import ru.danila.eventsapi.web.api.modules.auth.dto.assembler.AuthDtoAssembler;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -29,7 +29,7 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthService {
 
-    UserDtoAssembler userDtoAssembler;
+    AuthDtoAssembler authDtoAssembler;
 
     RoleRepository roleRepository;
 
@@ -50,7 +50,7 @@ public class AuthService {
                 ? roleRepository.findByName("ROLE_ORGANIZER")
                 : roleRepository.findByName("ROLE_USER");
 
-        UserEntity user = userDtoAssembler.mapAuthRegisterRequestToUserEntity(request);
+        UserEntity user = authDtoAssembler.mapAuthRegisterRequestToUserEntity(request);
         user.getRoles().add(role);
 
         user.setPassword(passwordEncoder.encode(request.getPassword()));
