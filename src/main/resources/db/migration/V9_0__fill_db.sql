@@ -8,6 +8,7 @@ INSERT INTO user_entity_role_entity
 VALUES
 (1, 1),
 (2, 2);
+(3, 3);
 
 INSERT INTO place_entity(address, capacity)
 VALUES
