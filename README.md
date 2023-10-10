@@ -1,1 +1,1 @@
-Course project
+Course project using Java
