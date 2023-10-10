@@ -43,19 +43,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // создание и удаление событий - только организатор
-                .antMatchers(HttpMethod.POST, "/api/v1/events").hasRole("ORGANIZER")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/events").hasRole("ORGANIZER")
+                .antMatchers(HttpMethod.POST, "/api/v1/events/**").hasRole("ORGANIZER")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/events/**").hasRole("ORGANIZER")
                 // список всех событий - любой желающий
-                .antMatchers(HttpMethod.GET, "/api/v1/events").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/events/**").permitAll()
 
                 // добавление и удаление мест проведения - только модератор
-                .antMatchers(HttpMethod.POST, "/api/v1/places").hasRole("MODERATOR")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/places").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.POST, "/api/v1/places/**").hasRole("MODERATOR")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/places/**").hasRole("MODERATOR")
                 // список всех мест проведения - любой желающий
-                .antMatchers(HttpMethod.GET, "/api/v1/places").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/places/**").permitAll()
 
                 // покупка билетов - только обычный пользователь
-                .antMatchers(HttpMethod.POST, "/api/v1/tickets").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/v1/tickets/**").hasRole("USER")
+
+                // для администраторов
+                .antMatchers("/admin/**").hasRole("ADMIN")
 
                 // зарегистрироваться и получить токен - любой пользователь
                 .antMatchers("/api/v1/auth/**").permitAll()
