@@ -22,6 +22,7 @@ import ru.danila.eventsapi.web.api.modules.auth.dto.assembler.AuthDtoAssembler;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -46,9 +47,14 @@ public class AuthService {
         });
 
         boolean isOrganizer = request.isOrganizer();
-        RoleEntity role = isOrganizer
+        Optional<RoleEntity> roleOptional = isOrganizer
                 ? roleRepository.findByName("ROLE_ORGANIZER")
                 : roleRepository.findByName("ROLE_USER");
+
+        if (roleOptional.isEmpty())
+            throw new IllegalArgumentException("Не найденна роль с таким именем");
+
+        RoleEntity role = roleOptional.get();
 
         UserEntity user = authDtoAssembler.mapAuthRegisterRequestToUserEntity(request);
         user.getRoles().add(role);

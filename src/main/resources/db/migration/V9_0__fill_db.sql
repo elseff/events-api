@@ -4,10 +4,10 @@ VALUES
 ('Organizer 1', 'Organizer 1', 'organizer1', '$2a$12$BVCXmfFzj5kp9m0cKb.L8OTRFGEvWnrU6aQYRj2geyxMJ4xocAzYy'),
 ('Moderator 1', 'Moderator 1', 'moder1', '$2a$12$BVCXmfFzj5kp9m0cKb.L8OTRFGEvWnrU6aQYRj2geyxMJ4xocAzYy');
 
-INSERT INTO user_entity_role_entity
+INSERT INTO user_entity_role_entity(user_id, role_id)
 VALUES
 (1, 1),
-(2, 2);
+(2, 2),
 (3, 3);
 
 INSERT INTO place_entity(address, capacity)
