@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+@DisplayName("Сервис по покупке билетов")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class TicketServiceTest {
 

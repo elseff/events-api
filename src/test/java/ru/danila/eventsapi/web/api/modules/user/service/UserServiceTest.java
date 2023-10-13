@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@DisplayName("Сервис по управлению пользователями")
 class UserServiceTest {
 
     @Mock
