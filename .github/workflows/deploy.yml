@@ -27,8 +27,8 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME}}/${{ secrets_DOCKER_REPO }} .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME}}/${{ secrets.DOCKER_REPO }} .
 
       - name: Publish Docker Image
-        run: docker push {{ secrets.DOCKER_USERNAME}}/${{ secrets_DOCKER_REPO }}
+        run: docker push {{ secrets.DOCKER_USERNAME}}/${{ secrets.DOCKER_REPO }}
 
