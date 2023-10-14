@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.danila.eventsapi.web.api.modules.ticket.dto.TicketCreationRequest;
 import ru.danila.eventsapi.web.api.modules.ticket.dto.TicketCreationResponse;
-import ru.danila.eventsapi.web.api.modules.ticket.dto.assembler.TickerDtoAssembler;
+import ru.danila.eventsapi.web.api.modules.ticket.dto.assembler.TicketDtoAssembler;
 import ru.danila.eventsapi.web.api.modules.ticket.service.TicketService;
 
 import javax.validation.Valid;
@@ -22,11 +22,11 @@ public class TicketController {
 
     TicketService ticketService;
 
-    TickerDtoAssembler tickerDtoAssembler;
+    TicketDtoAssembler ticketDtoAssembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TicketCreationResponse buyTicket(@RequestBody @Valid TicketCreationRequest request) {
-        return tickerDtoAssembler.mapTicketEntityToTicketCreationResponse(ticketService.buyTicket(request));
+        return ticketDtoAssembler.mapTicketEntityToTicketCreationResponse(ticketService.buyTicket(request));
     }
 }

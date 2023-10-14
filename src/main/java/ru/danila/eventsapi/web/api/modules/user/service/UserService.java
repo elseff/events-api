@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.danila.eventsapi.persistense.UserEntity;
 import ru.danila.eventsapi.persistense.dao.UserRepository;
+import ru.danila.eventsapi.web.api.modules.auth.service.AuthService;
+import ru.danila.eventsapi.web.api.modules.user.dto.UserResponse;
 
 import java.util.Optional;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class UserService {
 
     UserRepository userRepository;
+
+    AuthService authService;
 
     public Optional<UserEntity> findByUsername(String username) {
         Optional<UserEntity> userOptional = userRepository.findByUsername(username);
@@ -32,5 +36,10 @@ public class UserService {
             log.warn("Пользователь с id {} не найден", id);
 
         return userOptional;
+    }
+
+    public UserEntity getMe() {
+        return userRepository.findByUsername(authService.getCurrentAuthUser().getUsername()).orElseThrow(
+                () -> new IllegalArgumentException("Косяк"));
     }
 }

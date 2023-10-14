@@ -15,6 +15,7 @@ import ru.danila.eventsapi.web.api.modules.ticket.dto.TicketCreationRequest;
 import ru.danila.eventsapi.web.api.modules.user.service.UserService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -48,5 +49,9 @@ public class TicketService {
                 .build();
 
         return ticketRepository.save(ticket);
+    }
+
+    public List<TicketEntity> findTicketsByUser(UserEntity user) {
+        return ticketRepository.findAllByUser(user);
     }
 }
