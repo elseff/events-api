@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.danila.eventsapi.persistense.UserEntity;
 import ru.danila.eventsapi.persistense.dao.UserRepository;
+import ru.danila.eventsapi.security.UserDetailsImpl;
+import ru.danila.eventsapi.web.api.modules.auth.service.AuthService;
 
 import java.util.Optional;
 
@@ -26,6 +29,9 @@ class UserServiceTest {
 
     @InjectMocks
     UserService userService;
+
+    @Mock
+    AuthService authService;
 
     @BeforeEach
     void setUp() {
@@ -48,6 +54,7 @@ class UserServiceTest {
         Assertions.assertEquals(expectedUsername, actualUsername);
         verify(userRepository, times(1)).findByUsername(anyString());
         verifyNoMoreInteractions(userRepository);
+        verifyNoInteractions(authService);
     }
 
     @Test
@@ -61,12 +68,35 @@ class UserServiceTest {
         Assertions.assertTrue(userOptional.isEmpty());
         verify(userRepository, times(1)).findByUsername(anyString());
         verifyNoMoreInteractions(userRepository);
+        verifyNoInteractions(authService);
+    }
+
+    @Test
+    @DisplayName("Текущий пользователь")
+    void getMe() {
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(getUser()));
+        when(authService.getCurrentAuthUser()).thenReturn(getUserDetails());
+        UserEntity me = userService.getMe();
+
+        Assertions.assertNotNull(me);
+
+        verify(userRepository, times(1)).findByUsername(anyString());
+        verify(authService, times(1)).getCurrentAuthUser();
+        verifyNoMoreInteractions(userRepository);
+        verifyNoMoreInteractions(authService);
     }
 
     private UserEntity getUser() {
         return UserEntity.builder()
                 .firstName("test")
                 .lastName("test")
+                .username(getUserDetails().getUsername())
+                .password(getUserDetails().getPassword())
+                .build();
+    }
+
+    private UserDetails getUserDetails() {
+        return UserDetailsImpl.builder()
                 .username("test")
                 .password("test")
                 .build();
