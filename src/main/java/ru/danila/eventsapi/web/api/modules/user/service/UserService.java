@@ -30,14 +30,6 @@ public class UserService {
         return userOptional;
     }
 
-    public Optional<UserEntity> findById(Long id) {
-        Optional<UserEntity> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty())
-            log.warn("Пользователь с id {} не найден", id);
-
-        return userOptional;
-    }
-
     public UserEntity getMe() {
         return userRepository.findByUsername(authService.getCurrentAuthUser().getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("Косяк"));
