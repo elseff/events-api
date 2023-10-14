@@ -12,5 +12,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello
-        run: echo "Hello!!!"
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn -B clean package -DskipTests
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOKCER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOKCER_USERNAME}}/${{ secrets_DOCKER_REPO }} .
+
+      - name: Publish Docker Image
+        run: docker push {{ secrets.DOKCER_USERNAME}}/${{ secrets_DOCKER_REPO }}
+
