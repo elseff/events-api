@@ -4,10 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -53,4 +50,17 @@ public class UserEntity {
                     referencedColumnName = "id"
             ))
     Set<RoleEntity> roles = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity that)) return false;
+        return getId().equals(that.getId()) &&
+                getUsername().equals(that.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername());
+    }
 }
