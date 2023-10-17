@@ -38,7 +38,7 @@ public class EventService {
     @Transactional
     public EventEntity addEvent(EventCreationRequest request) {
         PlaceEntity place = placeRepository.findByAddress(request.getPlaceAddress()).orElseThrow(
-                () -> new IllegalArgumentException("Места с таким адресом не сущесвует"));
+                () -> new IllegalArgumentException("Места с таким адресом не существует"));
 
         UserEntity currentUser = userService.findByUsername(authService.getCurrentAuthUser().getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("Косяк"));
