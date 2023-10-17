@@ -64,7 +64,7 @@ public class EventService {
     @Transactional
     public void deleteByTitle(String title) {
         EventEntity event = eventRepository.findByTitle(title).orElseThrow(
-                () -> new IllegalArgumentException("Не сущесвует такого события"));
+                () -> new IllegalArgumentException("Не существует такого события"));
 
         UserEntity currentUser = userService.findByUsername(authService.getCurrentAuthUser().getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("Косяк"));
