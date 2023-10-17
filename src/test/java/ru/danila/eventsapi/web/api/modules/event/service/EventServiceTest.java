@@ -80,6 +80,8 @@ class EventServiceTest {
     void addEvent() {
         EventEntity event = getEvent1();
         when(placeRepository.findByAddress(anyString())).thenReturn(Optional.of(getPlace1()));
+        when(authService.getCurrentAuthUser()).thenReturn(getUserDetails1());
+        when(userService.findByUsername(anyString())).thenReturn(Optional.of(getUserEntity1()));
         when(eventDtoAssembler.mapEventCreationRequestToEventEntity(any(EventCreationRequest.class))).thenReturn(event);
         when(eventRepository.save(any(EventEntity.class))).thenReturn(event);
 
