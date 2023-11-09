@@ -1,1 +1,1 @@
-select setval('user_id_seq', 3, true)
+select setval('user_entity_id_seq', 3, true)

@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: events-api-container
-          image: elseff/events-api
-          imagePullPolicy: IfNotPresent
+          image: elseff/events-api:latest
+          imagePullPolicy: Always
           ports:
             - name: http
               protocol: TCP
