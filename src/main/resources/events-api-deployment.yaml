@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-api-deployment
+  labels:
+    app: events-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: events-api
+  template:
+    metadata:
+      labels:
+        app: events-api
+    spec:
+      containers:
+        - name: events-api-container
+          image: elseff/events-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 8080
+          env:
+            - name: POSTGRES_URL
+              value: "jdbc:postgresql://localhost:5432/events-api"
+            - name: POSTGRES_USERNAME
+              value: "elseff"
+            - name: POSTGRES_PASSWORD
+              value: "root"
+            - name: SERVER_PORT
+              value: "8080"
+        - name: postgressql-container
+          image: postgres:13-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "events-api"
+            - name: POSTGRES_USER
+              value: "elseff"
+            - name: POSTGRES_PASSWORD
+              value: "root"
+            - name: POSTGRES_DATA
+              value: "/var/lib/postgresql/data"
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: pg-data
+      volumes:
+      - name: pg-data
+        persistentVolumeClaim:
+          claimName: pvc-postgres-data
