@@ -5,7 +5,7 @@ metadata:
   labels:
     app: events-api
 data:
-  POSTGRES_HOST: "postgresql"
+  POSTGRES_HOST: "postgres-service"
   POSTGRES_PORT: "5432"
   POSTGRES_DB: "events-api"
   SERVER_PORT: "8080"
