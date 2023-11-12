@@ -7,8 +7,9 @@ metadata:
 data:
   POSTGRES_HOST: "postgres-service"
   POSTGRES_PORT: "5432"
-  POSTGRES_DB: "events-api"
   SERVER_PORT: "8080"
+  POSTGRES_USERNAME: "elseff"
+  POSTGRES_PASSWORD: "root"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,6 +37,11 @@ spec:
               protocol: TCP
               containerPort: 8080
           env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: postgres-configmap
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
@@ -48,14 +54,14 @@ spec:
                   name: events-api-configmap
             - name: POSTGRES_USERNAME
               valueFrom:
-                secretKeyRef:
-                  key: user
-                  name: postgres-secret
+                configMapKeyRef:
+                  key: POSTGRES_USERNAME
+                  name: events-api-configmap
             - name: POSTGRES_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: postgres-secret
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: events-api-configmap
             - name: SERVER_PORT
               valueFrom:
                 configMapKeyRef:
