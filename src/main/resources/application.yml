@@ -3,7 +3,8 @@ spring:
     enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: '${POSTGRES_URL}'
+    # jdbc:postgresql://localhost:5432/events-api
+    url: 'jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}'
     username: '${POSTGRES_USERNAME}'
     password: '${POSTGRES_PASSWORD}'
   jpa:
