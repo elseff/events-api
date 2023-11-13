@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-api-deployment
+  labels:
+    app: events-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: events-api
+  template:
+    metadata:
+      labels:
+        app: events-api
+    spec:
+      containers:
+        - name: events-api-container
+          image: elseff/events-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: events-api-configmap

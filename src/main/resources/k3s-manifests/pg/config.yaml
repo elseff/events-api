@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: "events-api"
+  POSTGRES_DATA: "/var/lib/postgresql/data"
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: postgres-secret
+  labels:
+    app: postgres
+data:
+  user: ZWxzZWZmCg==
+  password: cm9vdAo=

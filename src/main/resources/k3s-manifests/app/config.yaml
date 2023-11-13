@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: events-api-configmap
+  labels:
+    app: events-api
+data:
+  POSTGRES_DB: "events-api"
+  POSTGRES_HOST: "postgres-service"
+  POSTGRES_PORT: "5432"
+  SERVER_PORT: "8080"
+  POSTGRES_USERNAME: "elseff"
+  POSTGRES_PASSWORD: "root"
