@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RequestMapping("/admin")
 @SecurityRequirement(name = "Bearer Authentication")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Tag(name = "User Controller", description = "Управление пользователями")
+@Tag(name = "Admin Controller", description = "Панель администратора")
 public class AdminController {
 
     AdminService adminService;

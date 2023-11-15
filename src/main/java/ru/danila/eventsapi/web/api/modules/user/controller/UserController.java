@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/users")
 @SecurityRequirement(name = "Bearer Authentication")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Tag(name = "UserController controller", description = "Управление пользователем")
+@Tag(name = "User controller", description = "Управление пользователем")
 public class UserController {
 
     UserService userService;
