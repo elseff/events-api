@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,7 @@ public class PlaceController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @SecurityRequirement(name = "Bearer Authentication")
     public PlaceResponse addPlace(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Необходимые параметры для добавления места проведения события",
             required = true,
@@ -92,6 +94,7 @@ public class PlaceController {
     )
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @SecurityRequirement(name = "Bearer Authentication")
     public void deleteById(@Parameter(description = "Id места проведения события", required = true)
                            @PathVariable Long id) {
         placeService.deleteById(id);

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,7 @@ public class EventController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @SecurityRequirement(name = "Bearer Authentication")
     public EventCreationResponse registerEvent(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Необходимые параметры для добавления события",
             required = true,
@@ -119,6 +121,7 @@ public class EventController {
     )
     @DeleteMapping("/{title}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @SecurityRequirement(name = "Bearer Authentication")
     public void deleteById(@Parameter(description = "Название события", required = true)
                            @PathVariable String title) {
         eventService.deleteByTitle(title);
