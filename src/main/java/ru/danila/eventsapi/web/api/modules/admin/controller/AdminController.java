@@ -1,5 +1,10 @@
 package ru.danila.eventsapi.web.api.modules.admin.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,13 +22,32 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Tag(name = "User Controller", description = "Управление пользователями")
 public class AdminController {
 
     AdminService adminService;
 
+    @Operation(
+            method = "POST",
+            summary = "Изменить роль пользователя",
+            description = "Изменить роль пользователя",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Роль пользователя успешно изменена",
+                            content = @Content(
+                                    schema = @Schema(implementation = AdminResponse.class)
+                            )
+                    )
+            }
+    )
     @PostMapping("/change_role")
     @ResponseStatus(HttpStatus.OK)
-    public AdminResponse changeRole(@RequestBody @Valid AdminChangeRoleRequest request){
+    public AdminResponse changeRole(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Необходимые параметры для смены роли пользоввателя",
+            required = true,
+            content = @Content(schema = @Schema(implementation = AdminChangeRoleRequest.class)))
+                                    @RequestBody @Valid AdminChangeRoleRequest request) {
         return adminService.changeRole(request);
     }
 }

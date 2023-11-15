@@ -1,5 +1,9 @@
 package ru.danila.eventsapi.web.api.modules.user.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -34,23 +38,51 @@ public class UserController {
     UserDtoAssembler userDtoAssembler;
 
     TicketService ticketService;
-    
+
     AuthService authService;
-    
+
     TicketDtoAssembler ticketDtoAssembler;
-    
+
+    @Operation(
+            method = "GET",
+            summary = "Профиль пользователя",
+            description = "Профиль текущего пользователя",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Пользователь успешно найден",
+                            content = @Content(
+                                    schema = @Schema(implementation = UserResponse.class)
+                            )
+                    )
+            }
+    )
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public UserResponse getMe() {
         return userDtoAssembler.mapUserEntityToUserResponse(userService.getMe());
     }
 
+    @Operation(
+            method = "GET",
+            summary = "Приобритенные билеты",
+            description = "Приобритенные билеты пользователя",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Успешно найдены приобритенные билеты",
+                            content = @Content(
+                                    schema = @Schema(implementation = TicketResponse[].class)
+                            )
+                    )
+            }
+    )
     @GetMapping("/me/tickets")
     @ResponseStatus(HttpStatus.OK)
-    public List<TicketResponse> findPurchasedTickets(){
+    public List<TicketResponse> findPurchasedTickets() {
         UserEntity user = userService.findByUsername(authService.getCurrentAuthUser().getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("Косяк"));
-        
+
         List<TicketEntity> tickets = ticketService.findTicketsByUser(user);
         return tickets
                 .stream()
