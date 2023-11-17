@@ -1,4 +1,4 @@
 #!/bin/bash
 
-delete-pg.sh
-apply-pg.sh
+./delete-pg.sh
+./apply-pg.sh
