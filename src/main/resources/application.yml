@@ -27,3 +27,13 @@ server:
   port: '${SERVER_PORT}'
 jwt:
   secret: 'c29jaWFsbWVkaWE='
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
